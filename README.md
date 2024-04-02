@@ -1,7 +1,7 @@
 <p align="center">
     <img width="700" src="./docs/logo.svg" />
-    <h3>Code .files</h3>
 </p>
+<h3 align="center">Cold .files</h3>
 
 There's my configurations for:
 
@@ -47,7 +47,7 @@ cp config/tmux/tmux.conf $HOME/.tmux.conf
 
 # Install alacritty
 test -d $HOME/.config/alacritty && \
-cp $HOME/.config/alacritty{,_bkp} ||
+cp $HOME/.config/alacritty{,_bkp} || \
 mkdir -p $HOME/.config/alacritty
 cp -r config/alacritty $HOME/.config/alacritty
 ```
