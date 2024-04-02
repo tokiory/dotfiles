@@ -1,0 +1,175 @@
+# Author: Daniil Shilo <tokiory.personal@gmail.com>
+# Plugin manager: Antigen
+
+is_first_install=false
+
+# Function
+isoftware () {
+  brew install --cask arc
+  brew install --cask docker
+  brew install --cask obsidian
+  brew install --cask telegram
+  brew install --cask jetbrains-toolbox
+  brew install --cask warp
+  brew install --cask discord
+  brew install --cask raycast
+}
+
+# Paths
+ANTIGEN_PATH="$HOME/.config/antigen.zsh"
+HOMEBREW_PATH="/opt/homebrew/bin"
+
+# Create .config folder, if it doesn't exists
+if [ ! -d "$HOME/.config" ]; then
+  mkdir $HOME/.config
+fi
+
+# Warp config
+WARP_THEMES_DIR="$HOME/.warp/themes"
+
+# Antigen setup {{{
+if [ ! -f $ANTIGEN_PATH ]; then
+  echo "WHERE IS ANTIGEN?!" >&2
+  curl -L git.io/antigen > $ANTIGEN_PATH                        # If not downloaded, then install it
+  is_first_install=true
+fi
+
+source $ANTIGEN_PATH                                              # Source antigen plugin manager
+# }}}
+
+# Plugins {{{
+antigen bundle git                                                # Load git ohmyzsh's plugin
+antigen bundle zsh-users/zsh-syntax-highlighting                  # Syntax highlighting bundle
+antigen bundle zsh-users/zsh-autosuggestions                      # Autocomplete bundle
+antigen bundle zsh-users/zsh-completions                          # Additional completions
+antigen theme spaceship-prompt/spaceship-prompt                   # Spaceship theme
+
+# Tell Antigen that you're done
+antigen apply
+# }}}
+
+# Homebrew setup {{{
+if [[ "$OSTYPE" == "darwin"* ]]; then
+
+  if [ ! -d $HOMEBREW_PATH ]; then
+    echo "WHERE IS THE BREW"
+    bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+  fi
+
+  export PATH=$HOMEBREW_PATH:$PATH
+fi
+# }}}
+
+# Terminal utilities {{{
+if ! command -v eza &> /dev/null; then
+  brew install eza
+fi
+
+if ! command -v zoxide &> /dev/null; then
+  brew install zoxide
+fi
+
+if ! command -v nvim &> /dev/null; then
+  brew install nvim
+fi
+
+if ! command -v gsed &> /dev/null; then
+  brew install gnu-sed
+fi
+
+if ! command -v rg &> /dev/null; then
+  brew install ripgrep
+fi
+# }}}
+
+# pnpm {{{
+if command -v pnpm &> /dev/null; then
+  export PNPM_HOME="$HOME/Library/pnpm"
+
+  case ":$PATH:" in
+    *":$PNPM_HOME:"*)
+      ;;
+    *)
+      export PATH="$PNPM_HOME:$PATH"
+      ;;
+  esac
+fi
+# }}}
+
+# asdf {{{
+if ! command -v asdf &> /dev/null; then
+  brew install asdf
+fi
+source $(brew --prefix asdf)/libexec/asdf.sh
+# }}}
+
+# Exports
+export EDITOR="nvim"
+export EDITOR="nvim"
+export HISTSIZE=10000
+export SAVEHIST=10000
+export HISTFILE=~/.zsh_history
+setopt appendhistory
+
+# Cargo {{{
+if command -v cargo &> /dev/null; then
+  export PATH="$HOME/.cargo/bin":$PATH                                 # Adding it into $PATH environment variable
+fi
+# }}}
+
+# Go {{{
+if command -v go &> /dev/null; then
+  export GOPATH=$(asdf where golang)/packages
+  export GOROOT=$(asdf where golang)/go
+  export PATH="${PATH}:$(go env GOPATH)/bin"
+fi
+# }}}
+
+# fzf {{{
+if command -v fzf &> /dev/null; then
+  if [ ! -f "$HOME/.fzf.zsh" ]; then
+    /opt/homebrew/opt/fzf/install
+  fi 
+
+  [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+fi
+# }}}
+
+# Aliases {{{
+alias vimdiff="nvim -d"
+alias nvimdiff="nvim -d"
+alias t="task"
+
+# Eza
+alias ls='eza'
+alias l='eza --git-ignore'
+alias ll='eza --all --header --long'
+alias llm='eza --all --header --long --sort=modified'
+alias la='eza -lbhHigUmuSa'
+alias lx='eza -lbhHigUmuSa@'
+alias lt='eza --tree'
+alias tree='eza --tree'
+# }}}
+
+# Keybindings {{{
+# This is useful for navigating next/previous commands in VSCode
+bindkey -e
+# }}}
+
+# nvm
+export NVM_DIR="$HOME/.nvm"
+  [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
+  [ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
+
+# Autoload completions
+autoload -U compinit; compinit
+
+# Initialize zoxide
+eval "$(zoxide init zsh)"
+alias cde="z \$(find * -type d -maxdepth 3 | fzf)"
+
+if [[ "$is_first_install" = true ]]; then
+  isoftware
+fi
+
+# vim:tabstop=2 shiftwidth=2 expandtab syntax=bash foldmethod=marker

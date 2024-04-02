@@ -1,0 +1,13 @@
+[user]
+	name = <YOUR_NAME>
+	email = <YOUR_EMAIL>
+
+[push]
+	autoSetupRemote = true
+
+[merge]
+    tool = nvimdiff
+
+[mergetool "nvimdiff"]
+    # cmd = "nvim -d -u $HOME/.config/nvim/init.lua \"$LOCAL\" \"$MERGED\" \"$REMOTE\""
+    keepBackup = false
