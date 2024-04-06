@@ -21,13 +21,6 @@ return {
   },
 
   {
-    'folke/flash.nvim',
-    event = "VeryLazy",
-    ---@type Flash.Config
-    opts = {},
-  },
-
-  {
     "nvim-neo-tree/neo-tree.nvim",
     branch = "v3.x",
     dependencies = {
