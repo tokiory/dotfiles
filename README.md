@@ -16,19 +16,26 @@ There's my configurations for:
 **Zsh** - My default shell.
 
 # Bootstrap
-Use following scripts to bootstrap my config:
+This configuration does not provide any shell files to bootstrap it.
+Instead, you can use following code to bootstrap configurations, which you'll need.
+
+**Installation Method: Copy**
 
 ```zsh
+# Opt-in commentaries in zsh cli
+setopt interactivecomments
+
 # Download this repo
 git clone https://github.com/tokiory/dotfiles .cdf && \
 cd .cdf
 
 # Install neovim
-NVIM_PATH=$HOME/.config/nvim/
+NVIM_PATH="$HOME/.config/nvim"
+NVIM_CONFIG="$(pwd)/config/nvim"
 test -d $NVIM_PATH && \
-cp $NVIM_PATH{,_bkp} || \
+cp -r $NVIM_PATH{,_bkp} || \
 mkdir -p $NVIM_PATH
-cp -r config/nvim $NVIM_PATH
+cp -r $NVIM_CONFIG $NVIM_PATH
 
 # Install zsh
 test -f $HOME/.zshrc && \
@@ -47,7 +54,69 @@ cp config/tmux/tmux.conf $HOME/.tmux.conf
 
 # Install alacritty
 test -d $HOME/.config/alacritty && \
-cp $HOME/.config/alacritty{,_bkp} || \
+cp -r $HOME/.config/alacritty{,_bkp} || \
 mkdir -p $HOME/.config/alacritty
 cp -r config/alacritty $HOME/.config/alacritty
+```
+
+**Installation Method: Link**
+
+If you wanna link this repo folder to your local configuration folders, use following command:
+```bash
+# Opt-in commentaries in zsh cli
+setopt interactivecomments
+
+# Download this repo
+git clone https://github.com/tokiory/dotfiles .cdf && \
+cd .cdf
+
+# Global variables
+CONFIG_FOLDER="$HOME/.config"
+
+### Link neovim
+NVIM_PATH="$HOME/.config/nvim"
+NVIM_CONFIG="$(pwd)/config/nvim"
+### {{{
+test -d $NVIM_PATH && \
+    mv $NVIM_PATH{,_bkp} || \
+    mkdir -p $NVIM_PATH
+ln -sF $NVIM_CONFIG $CONFIG_FOLDER
+### }}}
+
+### Link zshconfig
+ZSH_PATH="$HOME/.zshrc"
+ZSH_CONFIG="$(pwd)/config/zsh/zshrc"
+### {{{
+test -f $ZSH_PATH && \
+    mv $ZSH_PATH{,_bkp}
+ln -sF $ZSH_CONFIG $ZSH_PATH
+### }}}
+
+### Link gitconfig
+GITCONFIG_PATH="$HOME/.gitconfig"
+GITCONFIG_CONFIG="$(pwd)/config/git/gitconfig"
+### {{{
+test -f $HOME/.gitconfig && \
+    mv $HOME/.gitconfig{,_bkp}
+ln -sF $(pwd)/config/git/gitconfig $HOME/.gitconfig
+### }}}
+
+### Install tmux
+TMUX_PATH="$HOME/.tmux.conf"
+TMUX_CONFIG="$(pwd)/config/tmux/tmux.conf"
+### {{{
+test -f $HOME/.tmux.conf && \
+    mv $HOME/.tmux.conf{,_bkp}
+ln -sF $(pwd)/config/tmux/tmux.conf $HOME/.tmux.conf
+### }}}
+
+### Install alacritty
+ALACRITTY_PATH="$HOME/.config/alacritty"
+ALACRITTY_CONFIG="$(pwd)/config/alacritty"
+### {{{
+test -d $HOME/.config/alacritty && \
+    mv $HOME/.config/alacritty{,_bkp} || \
+    mkdir -p $HOME/.config/alacritty
+ln -sF $(pwd)/config/alacritty $CONFIG_FOLDER
+### }}}
 ```
