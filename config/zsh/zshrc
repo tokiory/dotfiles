@@ -172,4 +172,5 @@ if [[ "$is_first_install" = true ]]; then
   isoftware
 fi
 
+export KEYTIMEOUT=1
 # vim:tabstop=2 shiftwidth=2 expandtab syntax=bash foldmethod=marker

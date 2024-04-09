@@ -6,20 +6,18 @@
 
 local telescope = require("telescope")
 telescope.setup({
+  extensions = {
+    ["ui-select"] = {
+      require("telescope.themes").get_dropdown {
+        -- even more opts
+      }
+    },
+  },
   pickers = {
     oldfiles = {
       cwd_only = true,
     },
-    -- find_files = {
-    --   find_command = {
-    --     "fd",
-    --     ".",
-    --     "--type",
-    --     "file",
-    --     "--hidden",
-    --     "--strip-cwd-prefix"
-    --   }
-    -- }
   },
 })
 
+telescope.load_extension("ui-select")

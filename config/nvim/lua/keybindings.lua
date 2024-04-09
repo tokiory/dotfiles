@@ -3,6 +3,7 @@ require "helpers/keyboard"
 local telescope_helpers = require("helpers.telescope")
 
 -- Basic stuff 😡
+im('jk', "<esc>")
 nm("<leader><leader>", "<cmd>Telescope<cr>")
 nm("K", "<cmd>lua vim.lsp.buf.hover()<cr>")
 nm("<leader>o", telescope_helpers.open_file)
