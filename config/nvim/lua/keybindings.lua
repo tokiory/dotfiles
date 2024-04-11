@@ -14,9 +14,9 @@ nm("<leader><Tab>", "<cmd>Neotree buffers float toggle<cr>")
 
 
 -- LSP 🤓
-nm("gd", "<cmd>Telescope lsp_definitions<cr>");
--- nm("gr", "<cmd>Telescope lsp_references<cr>");
-nm('gr', "<cmd>lua require'telescope.builtin'.lsp_references(require('telescope.themes').get_ivy({}))<cr>");
+nm("gd", "<cmd>Trouble lsp_definitions<cr>");
+nm('gr', "<cmd>Trouble lsp_references<cr>");
 nm("ga", "<cmd>lua vim.lsp.buf.code_action()<cr>");
+nm('<leader>x', "<cmd>TroubleToggle<cr>")
 nm("<leader>lr", "<cmd>lua vim.lsp.buf.rename()<CR>")
 nm("<leader>la", "<cmd>lua vim.lsp.buf.code_action()<CR>")
