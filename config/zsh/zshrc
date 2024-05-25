@@ -139,6 +139,8 @@ fi
 alias vimdiff="nvim -d"
 alias nvimdiff="nvim -d"
 alias t="task"
+alias n3="nnn"
+alias dod="open /Applications/Docker.app"
 
 # Eza
 alias ls='eza'

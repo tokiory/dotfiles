@@ -33,7 +33,7 @@ cmp.setup{
   },
 
   sources = cmp.config.sources({
-    { name = 'codeium', priority = 100 }, -- AI
+    -- { name = 'codeium', priority = 100 }, -- AI
     { name = 'nvim_lsp' },                -- LSP
     { name = 'nvim_lsp_signature_help' }, -- LSP for parameters in functions
     { name = 'nvim_lua' },                -- Lua Neovim API
