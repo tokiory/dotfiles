@@ -1,13 +1,26 @@
+[merge]
+  conflictstyle = diff3
+  tool = nvimdiff
+
+[diff]
+  colorMoved = default
+	tool = nvimdiff
+
 [user]
 	name = <YOUR_NAME>
-	email = <YOUR_EMAIL>
+	email = <YOUT_EMAIL>
 
 [push]
 	autoSetupRemote = true
 
-[merge]
-    tool = nvimdiff
+[filter "lfs"]
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+	clean = git-lfs clean -- %f
 
-[mergetool "nvimdiff"]
-    # cmd = "nvim -d -u $HOME/.config/nvim/init.lua \"$LOCAL\" \"$MERGED\" \"$REMOTE\""
-    keepBackup = false
+[rerere]
+	enabled = true
+
+[mergetool]
+	keepBackup = false
